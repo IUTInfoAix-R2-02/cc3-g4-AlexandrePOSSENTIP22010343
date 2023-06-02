@@ -1,4 +1,9 @@
-
+.fond{
+    -fx-background-color: "#87CEEB"
+}
+.point{
+    -fx-fill: "black";
+}
 .toile {
     -fx-fill: "white";
     -fx-stroke: "#919090";
