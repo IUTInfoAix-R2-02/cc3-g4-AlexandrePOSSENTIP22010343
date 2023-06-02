@@ -25,10 +25,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ToileController implements Initializable {
 
@@ -55,6 +52,8 @@ public class ToileController implements Initializable {
     Label erreur;
     @FXML
     Label erreurName;
+
+    private Map<String,Circle> points = new HashMap<>();
     public static boolean isNumeric(String s) {
         try {
             Double.parseDouble(s);
@@ -100,12 +99,21 @@ public class ToileController implements Initializable {
                 axe = 6;
                 break;
         }
+        for(Object o : pane.getChildren().toArray()) {
+            if (o instanceof Circle) {
+                if (((Circle) o).getId() == field.getId()) {
+                    ((Circle) o).setCenterX(getXRadarChart(note, axe));
+                    ((Circle) o).setCenterY(getYRadarChart(note, axe));
+                }
+            }
+        }
         Circle circle = new Circle();
         circle.setId(field.getId());
         circle.setCenterX(getXRadarChart(note,axe));
         circle.setCenterY(getYRadarChart(note,axe));
         circle.setRadius(5);
         circle.setStyle("-fx-fill-color: Black");
+        points.put(field.getId(), circle);
         pane.getChildren().add(circle);
     }
 
@@ -122,13 +130,16 @@ public class ToileController implements Initializable {
 
         for(Object o : pane.getChildren().toArray()) {
             if (o instanceof Circle) {
-                if (((Circle) o).getId() != null)
+                if (((Circle) o).getId() != null) {
                     pane.getChildren().remove(o);
+
+                }
             }
             if (o instanceof Line)
                 if (((Line) o).getId() != null)
                     pane.getChildren().remove(o);
         }
+        points.clear();
     }
     @FXML
     private void tracer(){
@@ -141,42 +152,51 @@ public class ToileController implements Initializable {
         if(tab.size()<6)
             return;
 
-        Circle c1 = new Circle();
-        Circle c2 = new Circle();;
-        Circle c3 = new Circle();;
-        Circle c4 = new Circle();;
-        Circle c5 = new Circle();;
-        Circle c6 = new Circle();;
 
-        for (Circle c : tab)
-            switch (c.getId()){
-                case "competence1":
-                     c1 = c;
-                case "competence2":
-                     c2 = c;
-                case "competence3":
-                     c3 = c;
-                case "competence4":
-                     c4 = c;
-                case "competence5":
-                     c5 = c;
-                case "competence6":
-                     c6 = c;
-            }
-        Line line1 = new Line(c1.getCenterX(),c1.getCenterY(),c2.getCenterX(),c2.getCenterY());
+        Line line1 = new Line();
+        line1.startXProperty().bind(points.get("competence1").centerXProperty());
+        line1.startYProperty().bind(points.get("competence1").centerYProperty());
+        line1.endXProperty().bind(points.get("competence2").centerXProperty());
+        line1.endYProperty().bind(points.get("competence2").centerYProperty());
         line1.setId("line1");
-        Line line2 = new Line(c2.getCenterX(),c2.getCenterY(),c3.getCenterX(),c3.getCenterY());
+
+        Line line2 = new Line();
+        line2.startXProperty().bind(points.get("competence2").centerXProperty());
+        line2.startYProperty().bind(points.get("competence2").centerYProperty());
+        line2.endXProperty().bind(points.get("competence3").centerXProperty());
+        line2.endYProperty().bind(points.get("competence3").centerYProperty());
         line2.setId("line2");
-        Line line3 = new Line(c3.getCenterX(),c3.getCenterY(),c4.getCenterX(),c4.getCenterY());
+
+        Line line3 = new Line();
+        line3.startXProperty().bind(points.get("competence3").centerXProperty());
+        line3.startYProperty().bind(points.get("competence3").centerYProperty());
+        line3.endXProperty().bind(points.get("competence4").centerXProperty());
+        line3.endYProperty().bind(points.get("competence4").centerYProperty());
         line3.setId("line3");
-        Line line4 = new Line(c4.getCenterX(),c4.getCenterY(),c5.getCenterX(),c5.getCenterY());
+
+        Line line4 = new Line();
+        line4.startXProperty().bind(points.get("competence4").centerXProperty());
+        line4.startYProperty().bind(points.get("competence4").centerYProperty());
+        line4.endXProperty().bind(points.get("competence5").centerXProperty());
+        line4.endYProperty().bind(points.get("competence5").centerYProperty());
         line4.setId("line4");
-        Line line5 = new Line(c5.getCenterX(),c5.getCenterY(),c6.getCenterX(),c6.getCenterY());
+
+        Line line5 = new Line();
+        line5.startXProperty().bind(points.get("competence5").centerXProperty());
+        line5.startYProperty().bind(points.get("competence5").centerYProperty());
+        line5.endXProperty().bind(points.get("competence6").centerXProperty());
+        line5.endYProperty().bind(points.get("competence6").centerYProperty());
         line5.setId("line5");
-        Line line6 = new Line(c6.getCenterX(),c6.getCenterY(),c1.getCenterX(),c1.getCenterY());
+
+        Line line6 = new Line();
+        line6.startXProperty().bind(points.get("competence6").centerXProperty());
+        line6.startYProperty().bind(points.get("competence6").centerYProperty());
+        line6.endXProperty().bind(points.get("competence1").centerXProperty());
+        line6.endYProperty().bind(points.get("competence1").centerYProperty());
         line6.setId("line6");
 
-        pane.getChildren().addAll(line1, line2, line3, line4, line5, line6);
+
+        pane.getChildren().addAll(line1,line2, line3, line4, line5, line6 );
     }
 
 
