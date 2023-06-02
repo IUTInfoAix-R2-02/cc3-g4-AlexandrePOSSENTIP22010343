@@ -26,6 +26,7 @@ import javafx.scene.shape.Line;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -78,7 +79,6 @@ public class ToileController implements Initializable {
         }
 
         Double note = Double.parseDouble(field.getText());
-        System.out.println(field.getText() + field.getId());
         int axe = 0;
         switch (field.getId()){
             case "competence1":
@@ -101,7 +101,7 @@ public class ToileController implements Initializable {
                 break;
         }
         Circle circle = new Circle();
-        circle.setId("Point");
+        circle.setId(field.getId());
         circle.setCenterX(getXRadarChart(note,axe));
         circle.setCenterY(getYRadarChart(note,axe));
         circle.setRadius(5);
@@ -120,10 +120,63 @@ public class ToileController implements Initializable {
         erreur.setText("");
         erreurName.setText("");
 
+        for(Object o : pane.getChildren().toArray()) {
+            if (o instanceof Circle) {
+                if (((Circle) o).getId() != null)
+                    pane.getChildren().remove(o);
+            }
+            if (o instanceof Line)
+                if (((Line) o).getId() != null)
+                    pane.getChildren().remove(o);
+        }
+    }
+    @FXML
+    private void tracer(){
+        ArrayList<Circle> tab = new ArrayList<Circle>();
         for(Object o : pane.getChildren().toArray())
             if(o instanceof Circle)
-                if(((Circle) o).getId()=="Point")
-                    pane.getChildren().remove(o);
+                if(((Circle) o).getId()!=null) {
+                    tab.add(((Circle) o));
+                }
+        if(tab.size()<6)
+            return;
+
+        Circle c1 = new Circle();
+        Circle c2 = new Circle();;
+        Circle c3 = new Circle();;
+        Circle c4 = new Circle();;
+        Circle c5 = new Circle();;
+        Circle c6 = new Circle();;
+
+        for (Circle c : tab)
+            switch (c.getId()){
+                case "competence1":
+                     c1 = c;
+                case "competence2":
+                     c2 = c;
+                case "competence3":
+                     c3 = c;
+                case "competence4":
+                     c4 = c;
+                case "competence5":
+                     c5 = c;
+                case "competence6":
+                     c6 = c;
+            }
+        Line line1 = new Line(c1.getCenterX(),c1.getCenterY(),c2.getCenterX(),c2.getCenterY());
+        line1.setId("line1");
+        Line line2 = new Line(c2.getCenterX(),c2.getCenterY(),c3.getCenterX(),c3.getCenterY());
+        line2.setId("line2");
+        Line line3 = new Line(c3.getCenterX(),c3.getCenterY(),c4.getCenterX(),c4.getCenterY());
+        line3.setId("line3");
+        Line line4 = new Line(c4.getCenterX(),c4.getCenterY(),c5.getCenterX(),c5.getCenterY());
+        line4.setId("line4");
+        Line line5 = new Line(c5.getCenterX(),c5.getCenterY(),c6.getCenterX(),c6.getCenterY());
+        line5.setId("line5");
+        Line line6 = new Line(c6.getCenterX(),c6.getCenterY(),c1.getCenterX(),c1.getCenterY());
+        line6.setId("line6");
+
+        pane.getChildren().addAll(line1, line2, line3, line4, line5, line6);
     }
 
 

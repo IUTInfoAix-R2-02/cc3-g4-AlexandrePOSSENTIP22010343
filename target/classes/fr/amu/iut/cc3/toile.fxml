@@ -67,7 +67,7 @@
             </VBox>
         </HBox>
         <HBox spacing="10" alignment="BOTTOM_RIGHT" >
-            <Button text="Tracer" fx:id="Tracer"/>
+            <Button text="Tracer" fx:id="Tracer" onAction="#tracer"/>
             <Button text="Vider" fx:id="Vider" onAction="#clear"/>
         </HBox>
     </VBox>
