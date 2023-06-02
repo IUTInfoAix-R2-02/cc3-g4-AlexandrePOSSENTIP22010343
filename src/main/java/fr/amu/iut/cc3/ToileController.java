@@ -1,29 +1,14 @@
 package fr.amu.iut.cc3;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-
 import java.net.URL;
 import java.util.*;
 
@@ -99,6 +84,7 @@ public class ToileController implements Initializable {
                 axe = 6;
                 break;
         }
+
         for(Object o : pane.getChildren().toArray()) {
             if (o instanceof Circle) {
                 if (((Circle) o).getId() == field.getId()) {
@@ -195,10 +181,8 @@ public class ToileController implements Initializable {
         line6.endYProperty().bind(points.get("competence1").centerYProperty());
         line6.setId("line6");
 
-
         pane.getChildren().addAll(line1,line2, line3, line4, line5, line6 );
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
