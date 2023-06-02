@@ -1,4 +1,6 @@
-
+.fond{
+    -fx-background-color: "#87CEEB"
+}
 .toile {
     -fx-fill: "white";
     -fx-stroke: "#919090";
