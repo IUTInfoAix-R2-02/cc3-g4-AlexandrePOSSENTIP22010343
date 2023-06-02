@@ -66,7 +66,7 @@ public class ToileController implements Initializable {
     @FXML
     private void addPoint(ActionEvent event) {
         TextField field = (TextField)event.getSource();
-        if (!isNumeric(field.getText()) || field.getText().isBlank() || field.getText().isEmpty() || Double.parseDouble(field.getText())>20 || Double.parseDouble(field.getText())<0){
+        if (!isNumeric(field.getText()) || Double.parseDouble(field.getText())>20 || Double.parseDouble(field.getText())<0){
             erreur.setText("Erreur de saisie :");
             erreur.setTextFill(Color.RED);
             erreurName.setTextFill(Color.RED);
@@ -101,13 +101,29 @@ public class ToileController implements Initializable {
                 break;
         }
         Circle circle = new Circle();
+        circle.setId("Point");
         circle.setCenterX(getXRadarChart(note,axe));
         circle.setCenterY(getYRadarChart(note,axe));
         circle.setRadius(5);
         circle.setStyle("-fx-fill-color: Black");
         pane.getChildren().add(circle);
+    }
 
+    @FXML
+    private void clear(){
+        competence1.setText("");
+        competence2.setText("");
+        competence3.setText("");
+        competence4.setText("");
+        competence5.setText("");
+        competence6.setText("");
+        erreur.setText("");
+        erreurName.setText("");
 
+        for(Object o : pane.getChildren().toArray())
+            if(o instanceof Circle)
+                if(((Circle) o).getId()=="Point")
+                    pane.getChildren().remove(o);
     }
 
 
